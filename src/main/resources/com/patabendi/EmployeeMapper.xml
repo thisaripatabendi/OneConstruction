@@ -36,12 +36,12 @@
 	    SELECT * FROM employee WHERE project_id = #{project_id};
 	</select>
 	
-	<select id="getSalary" resultMap="employeeResult">
+<!-- 	<select id="getSalary" resultMap="employeeResult">
 	    SELECT SUM(employee.salary) as salary, project_id FROM employee 
 			WHERE employee.project_id in (
 				SELECT DISTINCT project.id FROM project 
 				INNER JOIN employee ON project.id = employee.project_id) 
 		group by project_id;
-	</select>
+	</select> -->
 
 </mapper>
