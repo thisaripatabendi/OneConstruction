@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ProjectManager {
 	
-	private String manager_id;
+	private int manager_id;
 	private String name;
 	private String email;
 	private String contact_number;	
@@ -17,16 +17,18 @@ public class ProjectManager {
 
 	}
 	
-	public ProjectManager(String manager_id, String name, String email, String contact_number) {
+	public ProjectManager(int manager_id, String name, String email, String contact_number) {
 		this.manager_id = manager_id;
 		this.name = name;
 		this.email = email;
 		this.contact_number = contact_number;
 	}
-	public String getManager_id() {
+	
+	public int getManager_id() {
 		return manager_id;
 	}
-	public void setManager_id(String manager_id) {
+	
+	public void setManager_id(int manager_id) {
 		this.manager_id = manager_id;
 	}
 	public String getName() {

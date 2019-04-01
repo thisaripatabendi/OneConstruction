@@ -28,7 +28,7 @@ public class ProjectService {
 	@GET
 	@Path("/getProject/{projectId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Project getProject(@PathParam("projectId") String project_id) {
+	public Project getProject(@PathParam("projectId") int project_id) {
 		Project project = ProjectDAO.getProject(project_id);
 		return project;
 	}
@@ -53,7 +53,7 @@ public class ProjectService {
 	@DELETE
 	@Path("/deleteProject/{projectId}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public void deleteProject(@PathParam("projectId") String project_id) {
+	public void deleteProject(@PathParam("projectId") int project_id) {
 		ProjectDAO projectDAO = new ProjectDAO();
 		projectDAO.deleteProject(project_id);
 		System.out.println("---Data deleted---");
@@ -62,7 +62,7 @@ public class ProjectService {
 	@GET
 	@Path("{managerId}/allProjects")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public List<Project> getAllEmployeesByProjectId(@PathParam("managerId") String manager_id){
+	public List<Project> getAllEmployeesByProjectId(@PathParam("managerId") int manager_id){
 		List<Project> listOfProjects = ProjectDAO.getAllProjectsByManager(manager_id);
         return listOfProjects;
 	}

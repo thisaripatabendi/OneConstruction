@@ -28,7 +28,7 @@ public class ProjectManagerService {
 	@GET
 	@Path("/getManager/{managerId}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public ProjectManager getManager(@PathParam("managerId") String manager_id) {
+	public ProjectManager getManager(@PathParam("managerId") int manager_id) {
 		ProjectManager manager = ProjectManagerDAO.getManager(manager_id);
 		return manager;
 	}
@@ -45,6 +45,7 @@ public class ProjectManagerService {
 	@Path("/updateManager")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public void updateManager(ProjectManager manager) {
+		System.out.println("------------" + manager.getManager_id()+manager.getEmail());
 		ProjectManagerDAO managerDAO = new ProjectManagerDAO();
 		managerDAO.update(manager);
 		System.out.println("---Data updated---");
@@ -53,7 +54,7 @@ public class ProjectManagerService {
 	@DELETE
 	@Path("/deleteManager/{managerId}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public void deleteManager(@PathParam("managerId") String manager_id) {
+	public void deleteManager(@PathParam("managerId") int manager_id) {
 		ProjectManagerDAO managerDAO = new ProjectManagerDAO();
 		managerDAO.deleteManager(manager_id);
 		System.out.println("---Data deleted---");

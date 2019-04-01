@@ -8,17 +8,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Employee {
 	
-	private String emp_id;
+	private int emp_id;
 	private String emp_name;
 	private double emp_salary;
-	private String project_id;
+	private int project_id;
 	private String emp_email;
 	
 	public Employee() {
 
 	}
 
-	public Employee(String emp_id, String emp_name, double emp_salary, String project_id, String emp_email) {
+	public Employee(int emp_id, String emp_name, double emp_salary, int project_id, String emp_email) {
 		this.emp_id = emp_id;
 		this.emp_name = emp_name;
 		this.emp_salary = emp_salary;
@@ -26,10 +26,10 @@ public class Employee {
 		this.emp_email = emp_email;
 	}
 	
-	public String getEmp_id() {
+	public int getEmp_id() {
 		return emp_id;
 	}
-	public void setEmp_id(String emp_id) {
+	public void setEmp_id(int emp_id) {
 		this.emp_id = emp_id;
 	}
 	public String getEmp_name() {
@@ -44,10 +44,10 @@ public class Employee {
 	public void setEmp_salary(double emp_salary) {
 		this.emp_salary = emp_salary;
 	}
-	public String getProject_id() {
+	public int getProject_id() {
 		return project_id;
 	}
-	public void setProject_id(String project_id) {
+	public void setProject_id(int project_id) {
 		this.project_id = project_id;
 	}
 	public String getEmp_email() {

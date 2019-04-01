@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="com.patabendi.ProjectSalaryMapper">
+	
+	<resultMap id="salaryResult" type="projectSalarySum">
+		<id property="salary_sum" column="salary" />
+		<result property="project_name" column="project_name"/>
+	</resultMap>
+	
+	<select id="getSalary" resultMap="salaryResult">
+		SELECT project.name as project_name, SUM(employee.salary) as salary 
+		FROM employee 
+		INNER JOIN project ON employee.project_id = project.id
+		group by project.name;
+	</select>
+
+</mapper>

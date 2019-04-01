@@ -16,7 +16,7 @@ public class ProjectDAO {
 		return projectlist;
 	}
 
-	public static Project getProject(String project_id) {
+	public static Project getProject(int project_id) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
 		Project project = (Project) session.selectOne("com.patabendi.ProjectMapper.selectProjectById", project_id); 
 		session.close();
@@ -46,14 +46,14 @@ public class ProjectDAO {
 	    session.close();
 	}
 
-	public void deleteProject(String project_id) {
+	public void deleteProject(int project_id) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
 		session.delete("com.patabendi.ProjectMapper.deleteProjectById", project_id);
 		session.commit();   
 		session.close();
 	}
 
-	public static List<Project> getAllProjectsByManager(String manager_id) {
+	public static List<Project> getAllProjectsByManager(int manager_id) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
 		List<Project> projectlist = session.selectList("com.patabendi.ProjectMapper.selectAllProjectsByManager", manager_id);
 		session.close();

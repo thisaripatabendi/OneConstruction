@@ -16,7 +16,7 @@ public class ProjectManagerDAO {
 		return managerlist;
 	}
 
-	public static ProjectManager getManager(String manager_id) {
+	public static ProjectManager getManager(int manager_id) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
 		ProjectManager manager = session.selectOne("com.patabendi.ProjectManagerMapper.selectManager", manager_id);
 		session.close();
@@ -29,7 +29,7 @@ public class ProjectManagerDAO {
 	}
 	
 	public void save(ProjectManager manager) {
-		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();	
+		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
 		try {
 		    session.insert("com.patabendi.ProjectManagerMapper.insertManager", manager);
 		    session.commit();
@@ -43,11 +43,12 @@ public class ProjectManagerDAO {
 	public void update(ProjectManager manager) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();	
 	    session.update("com.patabendi.ProjectManagerMapper.updateManager", manager);
+	    System.out.println("id : " + manager.getManager_id() + " " +manager.getContact_number());
 	    session.commit();
 	    session.close();	
 	}
 
-	public void deleteManager(String manager_id) {
+	public void deleteManager(int manager_id) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
 		session.delete("com.patabendi.ProjectManagerMapper.deleteManagerById", manager_id);
 		session.commit();   

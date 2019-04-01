@@ -5,15 +5,15 @@
 	<mapper namespace="com.patabendi.EmployeeMapper">
 	
 	<resultMap id="employeeResult" type="employee">
-		<id property="emp_id" column="emp_id" />
-		<result property="emp_name" column="emp_name"/>
-		<result property="emp_salary" column="emp_salary"/>
+		<id property="emp_id" column="id" />
+		<result property="emp_name" column="name"/>
+		<result property="emp_salary" column="salary"/>
 		<result property="project_id" column="project_id"/>
-		<result property="emp_email" column="emp_email"/>
+		<result property="emp_email" column="email"/>
 	</resultMap>
 
 	<insert id="insertEmployee" parameterType="employee">
-		INSERT into employee(emp_id,emp_name,emp_salary,project_id,emp_email) VALUES(#{emp_id}, #{emp_name}, #{emp_salary}, #{project_id}, #{emp_email}) 	    
+		INSERT into employee(name,salary,project_id,email) VALUES(#{emp_name}, #{emp_salary}, #{project_id}, #{emp_email}) 	    
 	</insert>
 
 	<select id="selectAllEmployees" resultMap="employeeResult">
@@ -21,15 +21,15 @@
 	</select>
 	
 	<select id="selectEmployeeById" parameterType="string" resultMap="employeeResult">
-      	SELECT * FROM employee WHERE emp_id = #{emp_id};
+      	SELECT * FROM employee WHERE id = #{emp_id};
    	</select>
    	
    	<update id="updateEmployee" parameterType="employee">
-		UPDATE employee SET emp_name=#{emp_name}, emp_salary=#{emp_salary}, project_id=#{project_id}, emp_email=#{emp_email} WHERE emp_id=#{emp_id}  	    
+		UPDATE employee SET name=#{emp_name}, salary=#{emp_salary}, project_id=#{project_id}, email=#{emp_email} WHERE id=#{emp_id}  	    
 	</update>
 	
 	<delete id="deleteEmployeeById" parameterType="string">
-		DELETE FROM employee WHERE emp_id =#{emp_id}  	    
+		DELETE FROM employee WHERE id =#{emp_id}  	    
 	</delete>
 	
 	<select id="selectAllEmployeesByProject" resultMap="employeeResult">
@@ -37,10 +37,10 @@
 	</select>
 	
 	<select id="getSalary" resultMap="employeeResult">
-	    SELECT SUM(employee.emp_salary) as emp_salary, project_id FROM employee 
+	    SELECT SUM(employee.salary) as salary, project_id FROM employee 
 			WHERE employee.project_id in (
-				SELECT DISTINCT project.project_id FROM project 
-				INNER JOIN employee ON project.project_id = employee.project_id) 
+				SELECT DISTINCT project.id FROM project 
+				INNER JOIN employee ON project.id = employee.project_id) 
 		group by project_id;
 	</select>
 

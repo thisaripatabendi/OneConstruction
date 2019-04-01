@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.patabendi.MyBatisUtil;
 import com.patabendi.model.Employee;
+import com.patabendi.model.ProjectSalarySum;
 
 public class EmployeeDAO {
 
@@ -16,7 +17,7 @@ public class EmployeeDAO {
 		return emplist;
 	}
 
-	public static Employee getEmployee(String emp_id) {
+	public static Employee getEmployee(int emp_id) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
 		Employee emp = (Employee) session.selectOne("com.patabendi.EmployeeMapper.selectEmployeeById", emp_id);
 		session.close();
@@ -48,14 +49,14 @@ public class EmployeeDAO {
 	    session.close();
 	}
 
-	public void deleteEmployee(String emp_id) {
+	public void deleteEmployee(int emp_id) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
 		session.delete("com.patabendi.EmployeeMapper.deleteEmployeeById", emp_id);
 		session.commit();
 		session.close();		
 	}
 
-	public static List<Employee> getAllEmployeesByProject(String project_id) {
+	public static List<Employee> getAllEmployeesByProject(int project_id) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
 		List<Employee> emplist = session.selectList("com.patabendi.EmployeeMapper.selectAllEmployeesByProject", project_id);
 		session.close();
@@ -67,9 +68,11 @@ public class EmployeeDAO {
 		}
 	}
 	
-	public static List<Employee> getSalaries() {
+	public static List<ProjectSalarySum> getSalaries() {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-		List<Employee> projectlist = session.selectList("com.patabendi.EmployeeMapper.getSalary");
+		System.out.println("salary dao executed 1");
+		List<ProjectSalarySum> projectlist = session.selectList("com.patabendi.ProjectSalaryMapper.getSalary");
+		System.out.println("salary dao executed 2");
 		session.close();
 		return projectlist;
 	}

@@ -29,7 +29,7 @@ public class EmployeeService {
 	@GET
 	@Path("/getEmployee/{emp_id}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Employee getEmployee(@PathParam("emp_id") String emp_id) {
+	public Employee getEmployee(@PathParam("emp_id") int emp_id) {
 		Employee employee = EmployeeDAO.getEmployee(emp_id);
 		return employee;
 	}
@@ -53,7 +53,7 @@ public class EmployeeService {
 	@DELETE
 	@Path("/deleteEmployee/{emp_id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public void deleteEmployee(@PathParam("emp_id") String emp_id) {
+	public void deleteEmployee(@PathParam("emp_id") int emp_id) {
 		EmployeeDAO empDAO = new EmployeeDAO();
 		empDAO.deleteEmployee(emp_id);
 		System.out.println("---Data deleted---");
@@ -62,7 +62,7 @@ public class EmployeeService {
 	@GET
 	@Path("{project_id}/allEmployee")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public List<Employee> getAllEmployeesByProjectId(@PathParam("project_id") String project_id){
+	public List<Employee> getAllEmployeesByProjectId(@PathParam("project_id") int project_id){
 		List<Employee> listOfEMployees = EmployeeDAO.getAllEmployeesByProject(project_id);
         return listOfEMployees;
 	}
