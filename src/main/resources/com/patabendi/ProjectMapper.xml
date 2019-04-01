@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="com.patabendi.ProjectMapper">
+	
+	<resultMap id="projectResult" type="project">
+		<id property="project_id" column="project_id" />
+		<result property="project_name" column="project_name"/>
+		<result property="project_location" column="project_location"/>
+		<result property="manager_id" column="manager_id"/>
+	</resultMap>
+	
+	<select id="selectAllProjects" resultMap="projectResult">
+	    SELECT * FROM project
+	</select>
+	
+	<select id="selectProjectById" parameterType="string" resultMap="projectResult">
+      	SELECT * FROM project WHERE project_id = #{project_id};
+   	</select>
+   	
+   	<insert id="insertProject" parameterType="project">
+		INSERT into project(project_id,project_name,project_location,manager_id) VALUES(#{project_id}, #{project_name}, #{project_location}, #{manager_id}) 	    
+	</insert>
+	
+	<update id="updateProject" parameterType="project">
+		UPDATE project SET project_name=#{project_name}, project_location=#{project_location}, manager_id=#{manager_id} WHERE project_id=#{project_id}  	    
+	</update>
+	
+	<delete id="deleteProjectById" parameterType="string">
+		DELETE FROM project WHERE project_id =#{project_id}  	    
+	</delete>
+	
+	<select id="selectAllProjectsByManager" resultMap="projectResult">
+	    SELECT * FROM project WHERE manager_id = #{manager_id};
+	</select>
+	
+	<select id="selectSomeProjects" resultMap="projectResult">
+	    SELECT project_id, manager_id FROM project WHERE project_id = #{project_id};
+	</select>
+
+
+</mapper>

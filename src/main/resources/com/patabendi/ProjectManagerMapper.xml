@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="com.patabendi.ProjectManagerMapper">
+	
+	<resultMap id="managerResult" type="projectmanager">
+		<id property="manager_id" column="id" />
+		<result property="name" column="name"/>
+		<result property="email" column="email"/>
+		<result property="contact_number" column="contact_number"/>
+	</resultMap>
+
+	<select id="selectAllManagers" resultMap="managerResult">
+	    SELECT * FROM projectmanager
+	</select>
+	
+	<select id="selectManager" parameterType="string" resultMap="managerResult">
+      	SELECT * FROM projectmanager WHERE id = #{manager_id};
+   	</select>
+   	
+   	<insert id="insertManager" parameterType="projectManager">
+		INSERT into projectmanager(id,name,email,contact_number) VALUES(#{manager_id}, #{name}, #{email}, #{contact_number}) 	    
+	</insert>
+	
+	<update id="updateManager" parameterType="projectManager">
+		UPDATE projectmanager SET name=#{name}, email=#{email}, contact_number=#{contact_number} WHERE id=#{manager_id}  	    
+	</update>
+	
+	<delete id="deleteManagerById" parameterType="string">
+		DELETE FROM projectmanager WHERE id =#{manager_id}  	    
+	</delete>
+
+
+</mapper>
