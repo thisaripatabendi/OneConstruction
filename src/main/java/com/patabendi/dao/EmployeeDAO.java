@@ -23,13 +23,7 @@ public class EmployeeDAO {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
 		Employee emp = (Employee) session.selectOne("com.patabendi.EmployeeMapper.selectEmployeeById", emp_id);
 		session.close();
-		if(emp==null) {
-			System.out.println("going to throw exception....");
-			throw new DataNotFoundException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
-		}else {
-			return emp;
-		}
-		
+		return emp;		
 	}
 	 
 	public void save(Employee emp) {
@@ -39,7 +33,7 @@ public class EmployeeDAO {
 		    session.commit();
 		    System.out.println("---Data saved---");
 		} catch (Exception e) {
-			System.out.println(e.getCause().getMessage());
+			throw new DataNotFoundException(ErrorMessages.INTERNAL_SERVER_ERROR.getErrorMessage());
 		}
 	    
 	    session.close();		
@@ -63,19 +57,12 @@ public class EmployeeDAO {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
 		List<Employee> emplist = session.selectList("com.patabendi.EmployeeMapper.selectAllEmployeesByProject", project_id);
 		session.close();
-		if(emplist.isEmpty()) {
-			System.out.println("No employees found on project id : " + project_id);
-			return null;
-		}else {
-			return emplist;
-		}
+		return emplist;
 	}
 	
 	public static List<ProjectSalarySum> getSalaries() {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-		System.out.println("salary dao executed 1");
 		List<ProjectSalarySum> projectlist = session.selectList("com.patabendi.ProjectSalaryMapper.getSalary");
-		System.out.println("salary dao executed 2");
 		session.close();
 		return projectlist;
 	}

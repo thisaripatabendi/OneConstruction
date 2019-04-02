@@ -12,18 +12,15 @@ public class DataNotFoundExceptionMapper implements ExceptionMapper<DataNotFound
 	//@Override
     public Response toResponse(DataNotFoundException exception) {
     	
-    	ErrorMessage errorMessage;
+    	ErrorMessage errorMessage = new ErrorMessage(
+                exception.getMessage(),
+                ErrorMessages.NO_RECORD_FOUND.name()
+        );
+        
+        return Response.status(Response.Status.BAD_REQUEST).
+                entity(errorMessage).
+                build();
     	
-    	if(exception instanceof DataNotFoundException){
-    		errorMessage = new ErrorMessage(exception.getMessage(),ErrorMessages.NO_RECORD_FOUND.name() );
-		}
-		else{
-			errorMessage = new ErrorMessage(exception.getMessage(),ErrorMessages.INTERNAL_SERVER_ERROR.name());
-		} 
-        
-        System.out.println("to responce executed .......");
-        
-        return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
-    	}
+    }
 	
 }

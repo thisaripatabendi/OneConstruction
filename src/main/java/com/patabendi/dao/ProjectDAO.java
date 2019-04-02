@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import com.patabendi.MyBatisUtil;
+import com.patabendi.exceptions.DataNotFoundException;
+import com.patabendi.exceptions.ErrorMessages;
 import com.patabendi.model.Project;
 
 public class ProjectDAO {
@@ -20,11 +22,7 @@ public class ProjectDAO {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
 		Project project = (Project) session.selectOne("com.patabendi.ProjectMapper.selectProjectById", project_id); 
 		session.close();
-		if(project==null) {
-			return null;
-		}else {
-			return project;
-		}
+		return project;
 	}
 
 	public void save(Project project) {
@@ -34,22 +32,32 @@ public class ProjectDAO {
 		    session.commit();
 			System.out.println("---Data saved---");
 		} catch (Exception e) {
-			System.out.println(e.getCause().getMessage());
+			throw new DataNotFoundException(ErrorMessages.INTERNAL_SERVER_ERROR.getErrorMessage());
 		}
 	    session.close();	
 	}
 
 	public void update(Project project) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-	    session.update("com.patabendi.ProjectMapper.updateProject", project);
-	    session.commit();
+		try {
+		    session.update("com.patabendi.ProjectMapper.updateProject", project);
+		    session.commit();
+		    System.out.println("updated");
+		} catch (Exception e) {
+			throw new DataNotFoundException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+		}
 	    session.close();
 	}
 
 	public void deleteProject(int project_id) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-		session.delete("com.patabendi.ProjectMapper.deleteProjectById", project_id);
-		session.commit();   
+		try {
+			session.delete("com.patabendi.ProjectMapper.deleteProjectById", project_id);
+			session.commit(); 
+			System.out.println("deleted");
+		} catch (Exception e) {
+			throw new DataNotFoundException(ErrorMessages.CANNOT_DELETE_RECORD.getErrorMessage());
+		}  
 		session.close();
 	}
 
@@ -57,12 +65,7 @@ public class ProjectDAO {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
 		List<Project> projectlist = session.selectList("com.patabendi.ProjectMapper.selectAllProjectsByManager", manager_id);
 		session.close();
-		if(projectlist.isEmpty()) {
-			System.out.println("No Projects under manager id : " + manager_id);
-			return null;
-		}else {
-			return projectlist;
-		}
+		return projectlist;
 	}
 
 

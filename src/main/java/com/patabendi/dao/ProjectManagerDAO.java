@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import com.patabendi.MyBatisUtil;
+import com.patabendi.exceptions.DataNotFoundException;
+import com.patabendi.exceptions.ErrorMessages;
 import com.patabendi.model.ProjectManager;
 
 public class ProjectManagerDAO {
@@ -35,23 +37,33 @@ public class ProjectManagerDAO {
 		    session.commit();
 			System.out.println("---Data saved---");
 		} catch (Exception e) {
-			System.out.println(e.getCause().getMessage());
+			throw new DataNotFoundException(ErrorMessages.INTERNAL_SERVER_ERROR.getErrorMessage());
 		}
 	    session.close();		
 	}
 
 	public void update(ProjectManager manager) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();	
-	    session.update("com.patabendi.ProjectManagerMapper.updateManager", manager);
-	    System.out.println("id : " + manager.getManager_id() + " " +manager.getContact_number());
-	    session.commit();
+		try {
+		    session.update("com.patabendi.ProjectManagerMapper.updateManager", manager);
+		    session.commit();
+		    System.out.println("data updated successfully");
+		} catch (Exception e) {
+			throw new DataNotFoundException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+		}
+
 	    session.close();	
 	}
 
 	public void deleteManager(int manager_id) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-		session.delete("com.patabendi.ProjectManagerMapper.deleteManagerById", manager_id);
-		session.commit();   
+		try {
+			session.delete("com.patabendi.ProjectManagerMapper.deleteManagerById", manager_id);
+			session.commit();
+			System.out.println("data deleted");
+		} catch (Exception e) {
+			throw new DataNotFoundException(ErrorMessages.CANNOT_DELETE_RECORD.getErrorMessage());
+		}		   
 		session.close();		
 	}
 
