@@ -33,14 +33,14 @@ public class ProjectServiceTest extends JerseyTest {
 
 	@Test
     public void testGetProject(){
-        Response output = target("/project/getProject/P05").request().get();
+        Response output = target("/project/getProject/2").request().get();
         assertEquals("Should return status 200", 200, output.getStatus());
         assertNotNull("Should return Employee", output.getEntity());
     }
 	
 	@Test
     public void testGetProject_InvalidId() {
-    	Response output = target("/project/getProject/invalid-id").request().get();
+    	Response output = target("/project/getProject/603").request().get();
         assertEquals("Should return status 204", 204, output.getStatus());
     }
 	
@@ -52,7 +52,7 @@ public class ProjectServiceTest extends JerseyTest {
 	
 	@Test
     public void testAddProject(){
-    	Project project = new Project("P01", "Dell", "Earth", "M02");
+    	Project project = new Project(1, "Dell", "Earth", 2);
     	Response output = target("/project/addProject").request().post(Entity.entity(project, MediaType.APPLICATION_XML));
     	assertEquals("Should return 204", 204, output.getStatus());
         assertNotNull("Should return project", output.getEntity());
@@ -60,20 +60,20 @@ public class ProjectServiceTest extends JerseyTest {
 	
 	@Test
     public void testUpdateProject(){
-    	Project project = new Project("P01", "NYL", "Earth", "M02");
+    	Project project = new Project(1, "NYL", "Earth", 2);
     	Response output = target("/project/updateProject").request().put(Entity.entity(project, MediaType.APPLICATION_XML));
     	assertEquals("Should return 204", 204, output.getStatus());
     }
 	
 	@Test
     public void testDeleteProject() {
-    	Response output = target("/project/deleteProject/P011").request().delete();
+    	Response output = target("/project/deleteProject/6").request().delete();
     	assertEquals("Should return status 204", 204, output.getStatus());
     }
 	
 	@Test
     public void testGetAllEmployeesByProjectId() {
-    	Response output = target("/project/M02/allProjects").request().get();
+    	Response output = target("/project/2/allProjects").request().get();
     	assertEquals("should return status 200", 200, output.getStatus());
         assertNotNull("Should return list", output.getEntity());
     }
@@ -87,7 +87,7 @@ public class ProjectServiceTest extends JerseyTest {
 	
 	@Test
     public void testGetAllEmployeesByProjectId_InvalidProjectId() {
-    	Response output = target("/project/invalid-id/allProjects").request().get();
+    	Response output = target("/project/504/allProjects").request().get();
     	assertEquals("should return status 204", 204, output.getStatus());
         assertNotNull("Should return list", output.getEntity());
     }

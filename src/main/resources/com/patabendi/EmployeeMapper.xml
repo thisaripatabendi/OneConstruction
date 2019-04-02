@@ -20,7 +20,7 @@
 	    SELECT * FROM employee
 	</select>
 	
-	<select id="selectEmployeeById" parameterType="string" resultMap="employeeResult">
+	<select id="selectEmployeeById" parameterType="int" resultMap="employeeResult">
       	SELECT * FROM employee WHERE id = #{emp_id};
    	</select>
    	
@@ -28,7 +28,7 @@
 		UPDATE employee SET name=#{emp_name}, salary=#{emp_salary}, project_id=#{project_id}, email=#{emp_email} WHERE id=#{emp_id}  	    
 	</update>
 	
-	<delete id="deleteEmployeeById" parameterType="string">
+	<delete id="deleteEmployeeById" parameterType="int">
 		DELETE FROM employee WHERE id =#{emp_id}  	    
 	</delete>
 	

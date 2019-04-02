@@ -15,7 +15,7 @@
 	    SELECT * FROM project
 	</select>
 	
-	<select id="selectProjectById" parameterType="string" resultMap="projectResult">
+	<select id="selectProjectById" parameterType="int" resultMap="projectResult">
       	SELECT * FROM project WHERE id = #{project_id};
    	</select>
    	
@@ -27,11 +27,11 @@
 		UPDATE project SET name=#{project_name}, location=#{project_location}, manager_id=#{manager_id} WHERE id=#{project_id}  	    
 	</update>
 	
-	<delete id="deleteProjectById" parameterType="string">
+	<delete id="deleteProjectById" parameterType="int">
 		DELETE FROM project WHERE id =#{project_id}  	    
 	</delete>
 	
-	<select id="selectAllProjectsByManager" resultMap="projectResult">
+	<select id="selectAllProjectsByManager" parameterType="int" resultMap="projectResult">
 	    SELECT * FROM project WHERE manager_id = #{manager_id};
 	</select>
 	

@@ -33,7 +33,7 @@ public class ProjectManagerServiceTest extends JerseyTest{
 	
 	@Test
 	public void TestGetManager() {
-		Response output = target("/manager/getManager/M02").request().get();
+		Response output = target("/manager/getManager/2").request().get();
 		assertEquals("Should return status 200", 200, output.getStatus());
 		assertNotNull("Should return ProjectManager", output.getEntity());
 	}
@@ -52,7 +52,7 @@ public class ProjectManagerServiceTest extends JerseyTest{
 	
 	@Test
     public void testAddManager(){
-    	ProjectManager emp = new ProjectManager("M011", "Alan", "alan@gmail.com", "0715486254");
+    	ProjectManager emp = new ProjectManager(1, "Alan", "alan@gmail.com", "0715486254");
     	Response output = target("/manager/addManager").request().post(Entity.entity(emp, MediaType.APPLICATION_XML));
     	assertEquals("Should return 204", 204, output.getStatus());
         assertNotNull("Should return projectManager", output.getEntity());
@@ -60,7 +60,7 @@ public class ProjectManagerServiceTest extends JerseyTest{
 
 	@Test
     public void testUpdateManager(){
-		ProjectManager emp = new ProjectManager("M011", "Alan", "alan@gmail.com", "0715486254");
+		ProjectManager emp = new ProjectManager(1, "Alan", "alan@gmail.com", "0715486254");
     	Response output = target("/manager/updateManager").request().put(Entity.entity(emp, MediaType.APPLICATION_XML));
     	assertEquals("Should return 204", 204, output.getStatus());
     }
