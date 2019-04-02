@@ -2,12 +2,17 @@ package com.patabendi.service;
 
 import java.util.List;
 import javax.ws.rs.PathParam;
+
+import org.apache.log4j.Logger;
+
 import com.patabendi.dao.ProjectDAO;
 import com.patabendi.exceptions.DataNotFoundException;
 import com.patabendi.exceptions.ErrorMessages;
 import com.patabendi.model.Project;
 
 public class ProjectService {
+	
+	final static Logger logger = Logger.getLogger(ProjectService.class);
 
 	public static List<Project> getAllProjects() {
 		List<Project> listOfProjects = ProjectDAO.getAllProjects();
@@ -36,12 +41,24 @@ public class ProjectService {
 
 	public static void updateProject (Project project) {
 		ProjectDAO projectDAO = new ProjectDAO();
-		projectDAO.update(project);
+		
+		if(projectDAO.update(project)==0) {
+			throw new DataNotFoundException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+		}
+		
+		logger.info("Project updated");
+		
 	}
 
 	public static void deleteProject(@PathParam("projectId") int project_id) {
 		ProjectDAO projectDAO = new ProjectDAO();
-		projectDAO.deleteProject(project_id);
+		
+		if(projectDAO.deleteProject(project_id)==0) {
+			throw new DataNotFoundException(ErrorMessages.CANNOT_DELETE_RECORD.getErrorMessage());
+		}
+		
+		logger.info("Project Deleted");
+		
 	}
 
 	public static List<Project> getAllEmployeesByProjectId(@PathParam("managerId") int manager_id){

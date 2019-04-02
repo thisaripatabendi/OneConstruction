@@ -3,6 +3,7 @@ package com.patabendi.dao;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.apache.log4j.Logger;
 
 import com.patabendi.MyBatisUtil;
 import com.patabendi.exceptions.DataNotFoundException;
@@ -10,6 +11,8 @@ import com.patabendi.exceptions.ErrorMessages;
 import com.patabendi.model.Project;
 
 public class ProjectDAO {
+	
+	final static Logger logger = Logger.getLogger(ProjectDAO.class);
 
 	public static List<Project> getAllProjects() {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
@@ -30,35 +33,32 @@ public class ProjectDAO {
 		try {
 		    session.insert("com.patabendi.ProjectMapper.insertProject", project);
 		    session.commit();
-			System.out.println("---Data saved---");
+		    logger.info("Project added");
 		} catch (Exception e) {
 			throw new DataNotFoundException(ErrorMessages.INTERNAL_SERVER_ERROR.getErrorMessage());
 		}
 	    session.close();	
 	}
 
-	public void update(Project project) {
+	public int update(Project project) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-		try {
-		    session.update("com.patabendi.ProjectMapper.updateProject", project);
-		    session.commit();
-		    System.out.println("updated");
-		} catch (Exception e) {
-			throw new DataNotFoundException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
-		}
-	    session.close();
+		int records_affected = session.update("com.patabendi.ProjectMapper.updateProject", project);
+		session.commit();
+		session.close();
+	    return records_affected;
 	}
 
-	public void deleteProject(int project_id) {
-		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
+	public int deleteProject(int project_id) {
+		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();	
 		try {
-			session.delete("com.patabendi.ProjectMapper.deleteProjectById", project_id);
+			int number = session.delete("com.patabendi.ProjectMapper.deleteProjectById", project_id);
 			session.commit(); 
-			System.out.println("deleted");
+			session.close();
+			return number;
 		} catch (Exception e) {
-			throw new DataNotFoundException(ErrorMessages.CANNOT_DELETE_RECORD.getErrorMessage());
-		}  
-		session.close();
+			return 0;
+		}	
+		
 	}
 
 	public static List<Project> getAllProjectsByManager(int manager_id) {

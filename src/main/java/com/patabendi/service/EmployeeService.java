@@ -2,12 +2,17 @@ package com.patabendi.service;
 
 import java.util.List;
 import javax.ws.rs.PathParam;
+
+import org.apache.log4j.Logger;
+
 import com.patabendi.dao.EmployeeDAO;
 import com.patabendi.exceptions.DataNotFoundException;
 import com.patabendi.exceptions.ErrorMessages;
 import com.patabendi.model.Employee;
 
 public class EmployeeService {
+	
+	final static Logger logger = Logger.getLogger(EmployeeService.class);
 
 	public static List<Employee> getAllEmployees() {
 		
@@ -39,14 +44,23 @@ public class EmployeeService {
 	
 	public static void updateEmployee(Employee emp) {
 		EmployeeDAO empDAO = new EmployeeDAO();
-		empDAO.update(emp);
-	    System.out.println("---Data updated---");
+		
+		if(empDAO.update(emp)==0) {
+			throw new DataNotFoundException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+		}
+		
+		logger.info("Employee updated.");
 	}
 	
 	public static void deleteEmployee(@PathParam("emp_id") int emp_id) {
 		EmployeeDAO empDAO = new EmployeeDAO();
-		empDAO.deleteEmployee(emp_id);
-		System.out.println("---Data deleted---");
+		
+		if(empDAO.deleteEmployee(emp_id)==0) {
+			throw new DataNotFoundException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+		}
+		
+		logger.info("Employee Deleted.");
+	
 	}
 	
 	public static List<Employee> getAllEmployeesByProjectId(@PathParam("project_id") int project_id){

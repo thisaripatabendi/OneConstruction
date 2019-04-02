@@ -3,6 +3,7 @@ package com.patabendi.dao;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.apache.log4j.Logger;
 
 import com.patabendi.MyBatisUtil;
 import com.patabendi.exceptions.DataNotFoundException;
@@ -10,6 +11,8 @@ import com.patabendi.exceptions.ErrorMessages;
 import com.patabendi.model.ProjectManager;
 
 public class ProjectManagerDAO {
+	
+	final static Logger logger = Logger.getLogger(ProjectManagerDAO.class);
 
 	public static List<ProjectManager> getAllManagers() {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
@@ -21,13 +24,8 @@ public class ProjectManagerDAO {
 	public static ProjectManager getManager(int manager_id) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
 		ProjectManager manager = session.selectOne("com.patabendi.ProjectManagerMapper.selectManager", manager_id);
-		session.close();
-		if(manager==null) {
-			System.out.println("No manager found on id : " + manager_id);
-			return null;
-		}else {
-			return manager;
-		}
+		session.close();	
+		return manager;
 	}
 	
 	public void save(ProjectManager manager) {
@@ -35,36 +33,31 @@ public class ProjectManagerDAO {
 		try {
 		    session.insert("com.patabendi.ProjectManagerMapper.insertManager", manager);
 		    session.commit();
-			System.out.println("---Data saved---");
+		    logger.info("manager added");
 		} catch (Exception e) {
 			throw new DataNotFoundException(ErrorMessages.INTERNAL_SERVER_ERROR.getErrorMessage());
 		}
 	    session.close();		
 	}
 
-	public void update(ProjectManager manager) {
+	public int update(ProjectManager manager) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();	
-		try {
-		    session.update("com.patabendi.ProjectManagerMapper.updateManager", manager);
-		    session.commit();
-		    System.out.println("data updated successfully");
-		} catch (Exception e) {
-			throw new DataNotFoundException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
-		}
-
+	    int records_affected = session.update("com.patabendi.ProjectManagerMapper.updateManager", manager);
+	    session.commit();
 	    session.close();	
+	    return records_affected;
 	}
 
-	public void deleteManager(int manager_id) {
+	public int deleteManager(int manager_id) {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
 		try {
-			session.delete("com.patabendi.ProjectManagerMapper.deleteManagerById", manager_id);
-			session.commit();
-			System.out.println("data deleted");
+			int records_Affected = session.delete("com.patabendi.ProjectManagerMapper.deleteManagerById", manager_id);
+			session.commit();   
+			session.close();
+			return records_Affected;
 		} catch (Exception e) {
-			throw new DataNotFoundException(ErrorMessages.CANNOT_DELETE_RECORD.getErrorMessage());
-		}		   
-		session.close();		
+			return 0;
+		}
 	}
 
 }
