@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import com.patabendi.MyBatisUtil;
+import com.patabendi.exceptions.DataNotFoundException;
+import com.patabendi.exceptions.ErrorMessages;
 import com.patabendi.model.Employee;
 import com.patabendi.model.ProjectSalarySum;
 
@@ -22,11 +24,12 @@ public class EmployeeDAO {
 		Employee emp = (Employee) session.selectOne("com.patabendi.EmployeeMapper.selectEmployeeById", emp_id);
 		session.close();
 		if(emp==null) {
-			System.out.println("No employee on employee id : " + emp_id);
-			return null;
+			System.out.println("going to throw exception....");
+			throw new DataNotFoundException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
 		}else {
 			return emp;
-		}	
+		}
+		
 	}
 	 
 	public void save(Employee emp) {
