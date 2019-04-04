@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<meta charset="utf-8" />
+        <title>
+            One Construction - Add Project Manager
+        </title>
+        <script src='http://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.js'/></script>
+        <script src='http://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-resource.js'></script>
+        <script src='./js/manager-rest.js'></script>
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	    <link rel="stylesheet" href="./css/style.css">
+    </head>
+    
+    <body ng-app="UserManagement" ng-controller="UserManagementController">
+        
+			  <h3> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  Add Project Manager</h3>
+			  
+			  <div class="main-page">
+			  
+				  <form class="white-form" ng-submit="submitManager()">
+				  
+				   <h4>Add Project Manager</h4>
+				   <br>
+				  
+				    <div class="form-group">
+				      <label for="email">Name:</label>	      
+				        <input type="text" ng-model="form.name" class="form-control" placeholder="Enter name">
+				    </div>
+				    
+				    <div class="form-group">
+				      <label for="email">Email:</label>
+				        <input type="text" class="form-control" ng-model="form.email" placeholder="Enter email" >
+				    </div>
+				    
+				    <div class="form-group">
+				      <label for="email">Contact Number:</label>
+				        <input type="text" class="form-control" ng-model="form.contact_number" placeholder="Enter contact number">
+				    </div>  
+				    <br>
+				    <div class="form-group">        
+				      <input type="submit" class="btn btn-default save-btn" value="Save" />
+				    </div>
+				    
+				  </form>
+			  </div>
+    </body>
+    
+</html>

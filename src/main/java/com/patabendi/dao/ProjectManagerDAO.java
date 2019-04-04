@@ -29,15 +29,21 @@ public class ProjectManagerDAO {
 	}
 	
 	public void save(ProjectManager manager) {
-		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-		try {
-		    session.insert("com.patabendi.ProjectManagerMapper.insertManager", manager);
-		    session.commit();
-		    logger.info("manager added");
-		} catch (Exception e) {
-			throw new DataNotFoundException(ErrorMessages.INTERNAL_SERVER_ERROR.getErrorMessage());
-		}
-	    session.close();		
+		if(manager.getName().equals("")) {
+			logger.info("Project Manager is empty");
+			throw new DataNotFoundException(ErrorMessages.EMPTY_FIELDS.getErrorMessage());
+		}else {
+			SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
+			try {
+			    session.insert("com.patabendi.ProjectManagerMapper.insertManager", manager);
+			    session.commit();
+			    logger.info("manager added");
+			} catch (Exception e) {
+				logger.info(e.getCause().getMessage());
+				throw new DataNotFoundException(ErrorMessages.DUPLICAKE_KEY.getErrorMessage());
+			}
+		    session.close();		
+		}		
 	}
 
 	public int update(ProjectManager manager) {

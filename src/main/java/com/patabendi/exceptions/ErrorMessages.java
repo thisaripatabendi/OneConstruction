@@ -6,7 +6,10 @@ public enum ErrorMessages {
     NO_RECORDS_FOUND("No record found"),
     CANNOT_DELETE_RECORD("Cannot delete record, there can be projects or employees listed under the record"),
     RECORD_ALREADY_EXISTS("Record already exists"),
+	DUPLICAKE_KEY("Email should be unique"),
+	EMPTY_FIELDS("Please fill the required fields"),
     INTERNAL_SERVER_ERROR("Something went wrong. Please repeat this operation later.");
+
     
     private String errorMessage;
    

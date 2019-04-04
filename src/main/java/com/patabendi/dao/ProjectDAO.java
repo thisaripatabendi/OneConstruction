@@ -29,15 +29,20 @@ public class ProjectDAO {
 	}
 
 	public void save(Project project) {
-		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-		try {
-		    session.insert("com.patabendi.ProjectMapper.insertProject", project);
-		    session.commit();
-		    logger.info("Project added");
-		} catch (Exception e) {
-			throw new DataNotFoundException(ErrorMessages.INTERNAL_SERVER_ERROR.getErrorMessage());
-		}
-	    session.close();	
+		if(project.getProject_name().equals("")) {
+			logger.info("Project is empty");
+			throw new DataNotFoundException(ErrorMessages.EMPTY_FIELDS.getErrorMessage());
+		}else {
+			SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
+			try {
+			    session.insert("com.patabendi.ProjectMapper.insertProject", project);
+			    session.commit();
+			    logger.info("Project added");
+			} catch (Exception e) {
+				throw new DataNotFoundException(ErrorMessages.INTERNAL_SERVER_ERROR.getErrorMessage());
+			}
+		    session.close();
+		}			
 	}
 
 	public int update(Project project) {

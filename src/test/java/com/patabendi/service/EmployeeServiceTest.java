@@ -11,17 +11,24 @@ import javax.ws.rs.core.Response;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
+import com.patabendi.entrypoints.Employees;
+import com.patabendi.exceptions.DataNotFoundException;
 import com.patabendi.model.Employee;
 
 public class EmployeeServiceTest extends JerseyTest {
+	
+	@Rule 
+	public ExpectedException exception = ExpectedException.none();
 	
 	@Override
     public Application configure() {
         enable(TestProperties.LOG_TRAFFIC);
         enable(TestProperties.DUMP_ENTITY);
-        return new ResourceConfig(EmployeeService.class);
+        return new ResourceConfig(Employees.class);
     }
 
     @Test
@@ -38,10 +45,12 @@ public class EmployeeServiceTest extends JerseyTest {
         assertNotNull("Should return Employee", output.getEntity());
     }
     
-    @Test
-    public void testGetEmployeeFail_InvalidId() {
+    @Test (expected = DataNotFoundException.class)
+    public void testGetEmployeeFail_InvalidId() throws DataNotFoundException{
     	Response output = target("/employee/getEmployee/504").request().get();
-        assertEquals("Should return status 204", 204, output.getStatus());
+    	//exception.expect(DataNotFoundException.class);
+    	//exception.expectMessage("No record found for provided id");
+        //assertEquals("Should return status 404", 404, output.getStatus());
     }
     
     @Test

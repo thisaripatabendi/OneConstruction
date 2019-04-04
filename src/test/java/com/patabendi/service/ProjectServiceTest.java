@@ -13,6 +13,7 @@ import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
 import org.junit.Test;
 
+import com.patabendi.entrypoints.Projects;
 import com.patabendi.model.Project;
 
 public class ProjectServiceTest extends JerseyTest {
@@ -21,7 +22,7 @@ public class ProjectServiceTest extends JerseyTest {
     public Application configure() {
         enable(TestProperties.LOG_TRAFFIC);
         enable(TestProperties.DUMP_ENTITY);
-        return new ResourceConfig(ProjectService.class);
+        return new ResourceConfig(Projects.class);
     }
 	
 	@Test

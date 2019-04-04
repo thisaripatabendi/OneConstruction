@@ -19,6 +19,7 @@ public class EmployeeDAO {
 		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
 		List<Employee> emplist = session.selectList("com.patabendi.EmployeeMapper.selectAllEmployees"); 
 		session.close();
+		logger.info("Get all employees executed");
 		return emplist;
 	}
 
@@ -30,16 +31,21 @@ public class EmployeeDAO {
 	}
 	 
 	public void save(Employee emp) {
-		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();	
-		try {
-			session.insert("com.patabendi.EmployeeMapper.insertEmployee", emp);
-		    session.commit();
-		    logger.info("Employee Added.");
-		} catch (Exception e) {
-			throw new DataNotFoundException(ErrorMessages.INTERNAL_SERVER_ERROR.getErrorMessage());
-		}
-	    
-	    session.close();		
+		if(emp.getEmp_name().equals("")) {
+			logger.info("Employee is empty");
+			throw new DataNotFoundException(ErrorMessages.EMPTY_FIELDS.getErrorMessage());
+		}else {
+			SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();	
+			try {
+				session.insert("com.patabendi.EmployeeMapper.insertEmployee", emp);
+			    session.commit();
+			    logger.info("Employee Added.");
+			} catch (Exception e) {
+				logger.info(e.getCause().getMessage());
+				throw new DataNotFoundException(ErrorMessages.DUPLICAKE_KEY.getErrorMessage());
+			}		    
+		    session.close();	
+		}			
 	}
 	
 	public int update(Employee emp){
