@@ -1,70 +1,105 @@
-.container .main-page{
-  background-image: url("../images/tech4.jpg");
-  background-color: #cccccc;
-  height: 300px;
-  width:1100px;
-  margin-top:50px;
+.container .main-page {
+	background-image: url("../images/tech4.jpg");
+	background-color: #cccccc;
+	height: 300px;
+	width: 1100px;
+	margin-top: 50px;
+	margin-left: 0px;
 }
 
-.container .nav-btn{
-	height:150px;
+.container .nav-btn {
+	height: 150px;
 	width: 180px;
 	font-size: small;
 }
 
-.container .emp-btn{
+.container .emp-btn {
 	margin-top: 110px;
 	margin-left: 300px;
 	background-color: #3a9c58;
 	border-color: #3a9c58;
 }
 
-.container .pro-btn{
+.container .pro-btn {
 	margin-top: 110px;
 	margin-left: 10px;
 	background-color: #9a961c;
 	border-color: #9a961c;
 }
 
-.container .man-btn{
+.container .man-btn {
 	margin-top: 110px;
 	margin-left: 10px;
 	background-color: #22329c;
 	border-color: #22329c;
 }
 
-.container .search-btn{
+.container .search-btn {
 	margin-top: 35px;
 	margin-left: 300px;
 	background-color: #845cb3;
 	border-color: #845cb3;
 }
 
-.white-form{
-	background-color:white;
+.white-form {
+	background-color: white;
 	width: 420px;
 	height: 400px;
-	padding:10px;
-	margin-left:330px;
-	margin-top:50px;
+	padding: 10px;
+	margin-left: 330px;
+	margin-top: 50px;
 	border-style: ridge;
 }
 
-.employee{
+.search-form {
+	width: 700px;
+	height: 600px;
+	margin-left: 190px;
+}
+
+.employee {
 	height: 450px;
 }
 
-.main-page{
-  background-image: url("../images/tech4.jpg");
-  background-color: #cccccc;
-  height: 300px;
-  width:1100px;
-  margin-top:50px;
-  margin-left:125px;
-  padding:10px;
+.main-page {
+	background-image: url("../images/tech4.jpg");
+	background-color: #cccccc;
+	height: 300px;
+	width: 1100px;
+	margin-top: 50px;
+	margin-left: 125px;
+	padding: 10px;
 }
 
-.save-btn{
+.save-btn {
 	background-color: #568fe0;
 	width: 390px;
+}
+
+.deleteemp-btn {
+	background-color: #568fe0;
+	width: 50px;
+}
+
+.editemp-btn {
+	background-color: #568fe0;
+	width: 50px;
+}
+
+.edit-btn {
+	background-color: #568fe0;
+	margin-left: 500px;
+}
+
+.delete-btn {
+	background-color: red;
+}
+
+.table {
+	width: 85%;
+	margin-left: 50px;
+}
+
+.bar {
+	margin-left: 70px;
 }

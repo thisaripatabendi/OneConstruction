@@ -36,6 +36,11 @@
 	    SELECT * FROM employee WHERE project_id = #{project_id};
 	</select>
 	
+	<select id="selectAllEmployeesByManager" resultMap="employeeResult">
+	    SELECT * FROM employee WHERE employee.project_id in (
+				SELECT id FROM project WHERE manager_id = #{manager_id}) ;
+	</select>
+	
 <!-- 	<select id="getSalary" resultMap="employeeResult">
 	    SELECT SUM(employee.salary) as salary, project_id FROM employee 
 			WHERE employee.project_id in (

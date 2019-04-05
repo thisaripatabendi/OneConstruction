@@ -71,6 +71,15 @@ public class EmployeeService {
 			return listOfEMployees;
 		}
 	}
+
+	public static List<Employee> getAllEmployeesUnderManager(int manager_id) {
+		List<Employee> listOfEMployees = EmployeeDAO.getAllEmployeesByManager(manager_id);
+		if(listOfEMployees.isEmpty()) {
+			throw new DataNotFoundException(ErrorMessages.NO_RECORDS_FOUND.getErrorMessage());
+		}else {
+			return listOfEMployees;
+		}
+	}
 		
 	
 }

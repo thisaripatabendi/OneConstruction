@@ -19,9 +19,12 @@ public class Employees {
 	
 	@GET
 	@Path("/getAllEmployees")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    @Produces({MediaType.APPLICATION_JSON})
 	public List<Employee> getAllEmployees() {
 		List<Employee> listOfEMployees = EmployeeService.getAllEmployees();
+		/*for (Employee temp : listOfEMployees) {
+			System.out.println(temp.getEmp_name());
+		}*/
         return listOfEMployees;
 	}
 	
@@ -58,6 +61,14 @@ public class Employees {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public List<Employee> getAllEmployeesByProjectId(@PathParam("project_id") int project_id){
 		List<Employee> listOfEMployees = EmployeeService.getAllEmployeesByProjectId(project_id);
+        return listOfEMployees;
+	}
+	
+	@GET
+	@Path("{manager_id}/managedEmployees")
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public List<Employee> getAllEmployeesUnderManager(@PathParam("manager_id") int manager_id){
+		List<Employee> listOfEMployees = EmployeeService.getAllEmployeesUnderManager(manager_id);
         return listOfEMployees;
 	}
 

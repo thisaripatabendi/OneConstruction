@@ -24,7 +24,20 @@ app.controller("UserManagementController", function($scope, $http) {
     	}).then( _success, _error );
  
     };
-        
+    
+    $scope.searchEmployee = function() {
+    	
+    	$http({
+    	    method : "GET",
+    	    url : "rest/employee/getAllEmployees",
+    	    data : angular.toJson($scope.form),
+    	    headers : {
+    	        'Content-Type' : 'application/json'
+    	    }
+    	}).then( _success, _error );
+ 
+    };
+ 
 });
 
 

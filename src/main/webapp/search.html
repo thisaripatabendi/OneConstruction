@@ -1,27 +1,165 @@
 <!DOCTYPE html>
 <html>
-    <head>
-    	<meta charset="utf-8" />
-        <title>
-            One Construction - Add Project Manager
-        </title>
-        <script src='http://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.js'/></script>
-        <script src='http://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-resource.js'></script>
-        <script src='./js/consume-rest.js'></script>
-    </head>
-    
-    <body ng-app="UserManagement" ng-controller="UserManagementController">
-  
-        <h2>Search Employees</h2>
- 
-        <form ng-submit="submitEmployee()">
-            <table>
-                <tr>
-                    <td colspan="2"><input type="submit" value="Submit" /></td>
-                </tr>
-            </table>
-        </form>
- 
-    </body>
-    
+<head>
+	<meta charset="utf-8" />
+	<title>One Construction - Add Project Manager</title>
+	<script
+		src='http://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.js' /></script>
+	<script
+		src='http://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-resource.js'></script>
+	<script src='./js/search-rest.js'></script>
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	
+	<!--         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script> -->
+	<link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body ng-app="UserManagement" ng-controller="UserManagementController">
+
+	<h3>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+		&nbsp; Search Employee</h3>
+
+	<div class="main-page">
+
+		<div class="white-form search-form">
+
+			<h4>Search Employee</h4>
+			<br>
+
+			<form class="form-inline bar" ng-submit="searchEmployee()">
+				<div class="form-group">
+					<label for="email">Search By:</label> <select class="form-control"
+						ng-model="form.sort_by" class="form-control">
+						<option value="manager">Manager ID</option>
+						<option value="project">Project ID</option>
+						<option value="employee">Employee ID</option>
+						<option value="all">All</option>
+					</select>
+				</div>
+				&nbsp; &nbsp; &nbsp; &nbsp;
+				<div class="form-group">
+					<label for="ID">ID</label> <input type="text"
+						ng-model="form.emp_id" class="form-control">
+				</div>
+
+				<div class="form-group">
+					<input type="submit" class="btn btn-default search-btn"
+						value="Search" />
+				</div>
+			</form>
+			<br>
+			<table class="table table-striped">
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Salary</th>
+					<th>Project ID</th>
+					<th>Email</th>
+				</tr>
+
+				<tr ng-repeat="employee in employees">
+					<td>{{ employee.emp_id }}</td>
+					<td>{{ employee.emp_name }}</td>
+					<td>{{ employee.emp_salary }}</td>
+					<td>{{ employee.project_id }}</td>
+					<td>{{ employee.emp_email }}</td>
+				</tr>
+
+			</table>
+
+			<input type="submit" class="btn btn-default edit-btn"
+				data-toggle="modal" data-target="#editModal" value="Edit" /> <input
+				type="submit" class="btn btn-default delete-btn" data-toggle="modal"
+				data-target="#deleteModal" value="Delete" />
+
+		</div>
+	</div>
+
+	<div class="modal fade" id="editModal" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Edit Employee</h4>
+				</div>
+				<div class="modal-body">
+					<form ng-submit="editEmployee()">
+
+						<div class="form-group">
+							<label for="email">ID:</label> <input type="text"
+								ng-model="form.emp_id" class="form-control"
+								placeholder="Enter Employee ID">
+						</div>
+						<div class="form-group">
+							<label for="email">Name:</label> <input type="text"
+								ng-model="form.emp_name" class="form-control"
+								placeholder="Enter Employee Name">
+						</div>
+						<div class="form-group">
+							<label for="email">Salary:</label> <input type="text"
+								ng-model="form.emp_salary" class="form-control"
+								placeholder="Enter Employee Salary">
+						</div>
+						<div class="form-group">
+							<label for="email">Project ID:</label> <input type="text"
+								ng-model="form.project_id" class="form-control"
+								placeholder="Enter Project ID">
+						</div>
+						<div class="form-group">
+							<label for="email">Email:</label> <input type="text"
+								ng-model="form.emp_email" class="form-control"
+								placeholder="Enter Employee Email">
+						</div>
+						<div class="form-group">
+							<input type="submit" class="btn btn-default editemp-btn"
+								value="Edit" />
+						</div>
+					</form>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="modal fade" id="deleteModal" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Delete Employee</h4>
+				</div>
+				<div class="modal-body">
+					<form ng-submit="deleteEmployee()">
+
+						<div class="form-group">
+							<label for="email">ID:</label> <input type="text"
+								ng-model="form.emp_id" class="form-control"
+								placeholder="Enter Employee ID">
+						</div>
+						<div class="form-group">
+							<input type="submit" class="btn btn-default deleteemp-btn"
+								value="Delete" />
+						</div>
+					</form>
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+
+</body>
+
 </html>

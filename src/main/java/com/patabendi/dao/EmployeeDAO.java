@@ -77,6 +77,13 @@ public class EmployeeDAO {
 		session.close();
 		return projectlist;
 	}
+
+	public static List<Employee> getAllEmployeesByManager(int manager_id) {
+		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
+		List<Employee> emplist = session.selectList("com.patabendi.EmployeeMapper.selectAllEmployeesByManager", manager_id);
+		session.close();
+		return emplist;
+	}
 	
 	
 
