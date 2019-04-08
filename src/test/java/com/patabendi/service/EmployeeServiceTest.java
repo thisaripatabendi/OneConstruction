@@ -22,7 +22,7 @@ import com.patabendi.model.Employee;
 public class EmployeeServiceTest extends JerseyTest {
 	
 	@Rule 
-	public ExpectedException exception = ExpectedException.none();
+	public ExpectedException exception = ExpectedException.none(); 
 	
 	@Override
     public Application configure() {
@@ -50,7 +50,7 @@ public class EmployeeServiceTest extends JerseyTest {
     	Response output = target("/employee/getEmployee/504").request().get();
     	//exception.expect(DataNotFoundException.class);
     	//exception.expectMessage("No record found for provided id");
-        //assertEquals("Should return status 404", 404, output.getStatus());
+        assertEquals("Should return status 404", 404, output.getStatus());
     }
     
     @Test
@@ -62,7 +62,7 @@ public class EmployeeServiceTest extends JerseyTest {
     @Test
     public void testAddEmployee(){
     	Employee emp = new Employee(1, "Sam", 4500, 2, "sam@gmail.com");
-    	Response output = target("/employee/").request().post(Entity.entity(emp, MediaType.APPLICATION_XML));
+    	Response output = target("/employee").request().post(Entity.entity(emp, MediaType.APPLICATION_XML));
     	assertEquals("Should return 204", 204, output.getStatus());
         assertNotNull("Should return employee", output.getEntity());
     }

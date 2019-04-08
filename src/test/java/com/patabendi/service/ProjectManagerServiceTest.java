@@ -14,6 +14,7 @@ import org.glassfish.jersey.test.TestProperties;
 import org.junit.Test;
 
 import com.patabendi.entrypoints.ProjectManagers;
+import com.patabendi.exceptions.DataNotFoundException;
 import com.patabendi.model.ProjectManager;
 
 public class ProjectManagerServiceTest extends JerseyTest{
@@ -45,18 +46,19 @@ public class ProjectManagerServiceTest extends JerseyTest{
 		assertEquals("Should return status 404", 404, output.getStatus());
 	}
 	
-/*	@Test
+	@Test
 	public void TestGetManager_InvalidId() {
-		Response output = target("/manager/getManager/M011").request().get();
-		assertEquals("Should return status 204", 204, output.getStatus());
-	}*/
+		Response output = target("/manager/getManager/1154").request().get();
+		assertEquals("Should return status 500", 500, output.getStatus());
+		assertNotNull("Should return ErrorMessage", output.getEntity());
+	}
 	
 	@Test
     public void testAddManager(){
-    	ProjectManager emp = new ProjectManager(1, "Alan", "alan@gmail.com", "0715486254");
+    	ProjectManager emp = new ProjectManager(100, "Alan", "alan@gmail.com", "0715486254");
     	Response output = target("/manager/addManager").request().post(Entity.entity(emp, MediaType.APPLICATION_XML));
     	assertEquals("Should return 204", 204, output.getStatus());
-        assertNotNull("Should return projectManager", output.getEntity());
+        /*assertNotNull("Should return projectManager", output.getEntity());*/
     }
 
 	@Test
