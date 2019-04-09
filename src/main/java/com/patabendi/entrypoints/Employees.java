@@ -22,9 +22,6 @@ public class Employees {
     @Produces({MediaType.APPLICATION_JSON})
 	public List<Employee> getAllEmployees() {
 		List<Employee> listOfEMployees = EmployeeService.getAllEmployees();
-		/*for (Employee temp : listOfEMployees) {
-			System.out.println(temp.getEmp_name());
-		}*/
         return listOfEMployees;
 	}
 	

@@ -44,17 +44,20 @@
 .white-form {
 	background-color: white;
 	width: 420px;
-	height: 400px;
+	height: auto;
 	padding: 10px;
 	margin-left: 330px;
 	margin-top: 50px;
-	border-style: ridge;
+	border: 1px solid gray;
+	border-radius: 8px;
 }
 
 .search-form {
 	width: 700px;
-	height: 600px;
+	height: auto;
 	margin-left: 190px;
+	border: 1px solid gray;
+	border-radius: 8px;
 }
 
 .employee {
@@ -78,7 +81,7 @@
 
 .deleteemp-btn {
 	background-color: #568fe0;
-	width: 50px;
+	width: 70px;
 }
 
 .editemp-btn {

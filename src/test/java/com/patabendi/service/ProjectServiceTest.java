@@ -11,12 +11,17 @@ import javax.ws.rs.core.Response;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import com.patabendi.entrypoints.Projects;
 import com.patabendi.model.Project;
 
 public class ProjectServiceTest extends JerseyTest {
+	
+	@Rule
+	public ExpectedException exceptionRule = ExpectedException.none();
 	
 	@Override
     public Application configure() {
@@ -41,6 +46,8 @@ public class ProjectServiceTest extends JerseyTest {
 	
 	@Test
     public void testGetProject_InvalidId() {
+		/*exceptionRule.expect(NumberFormatException.class);
+	    exceptionRule.expectMessage("For input string");*/
     	Response output = target("/project/getProject/603").request().get();
         assertEquals("Should return status 204", 204, output.getStatus());
     }
@@ -68,29 +75,28 @@ public class ProjectServiceTest extends JerseyTest {
 	
 	@Test
     public void testDeleteProject() {
-    	Response output = target("/project/deleteProject/6").request().delete();
+    	Response output = target("/project/deleteProject/11").request().delete();
     	assertEquals("Should return status 204", 204, output.getStatus());
     }
 	
 	@Test
-    public void testGetAllEmployeesByProjectId() {
+    public void testGetAllProjectsByManagerId() {
     	Response output = target("/project/2/allProjects").request().get();
     	assertEquals("should return status 200", 200, output.getStatus());
         assertNotNull("Should return list", output.getEntity());
     }
 	
 	@Test
-    public void testGetAllEmployeesByProjectId_NoProjectId() {
+    public void testGetAllProjectsByManagerId_NoProjectId() {
     	Response output = target("/project//allProjects").request().get();
     	assertEquals("should return status 404", 404, output.getStatus());
         assertNotNull("Should return list", output.getEntity());
     }
 	
 	@Test
-    public void testGetAllEmployeesByProjectId_InvalidProjectId() {
-    	Response output = target("/project/504/allProjects").request().get();
-    	assertEquals("should return status 204", 204, output.getStatus());
-        assertNotNull("Should return list", output.getEntity());
+    public void testGetAllProjectsByManagerId_InvalidProjectId() {
+    	Response output = target("/project/101/allProjects").request().get();
+    	assertEquals("should return status 400", 400, output.getStatus());
     }
 	
 }

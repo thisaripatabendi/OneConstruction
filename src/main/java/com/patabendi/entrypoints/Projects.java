@@ -57,7 +57,7 @@ public class Projects {
 	@GET
 	@Path("{managerId}/allProjects")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public List<Project> getAllEmployeesByProjectId(@PathParam("managerId") int manager_id){
+	public List<Project> getAllProjectsByManagerId(@PathParam("managerId") int manager_id){
 		List<Project> listOfProjects = ProjectService.getAllEmployeesByProjectId(manager_id);
         return listOfProjects;
 	}

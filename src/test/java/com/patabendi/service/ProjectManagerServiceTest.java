@@ -55,7 +55,7 @@ public class ProjectManagerServiceTest extends JerseyTest{
 	
 	@Test
     public void testAddManager(){
-    	ProjectManager emp = new ProjectManager(100, "Alan", "alan@gmail.com", "0715486254");
+    	ProjectManager emp = new ProjectManager(100, "Alan", "alan55@gmail.com", "0715486254");
     	Response output = target("/manager/addManager").request().post(Entity.entity(emp, MediaType.APPLICATION_XML));
     	assertEquals("Should return 204", 204, output.getStatus());
         /*assertNotNull("Should return projectManager", output.getEntity());*/

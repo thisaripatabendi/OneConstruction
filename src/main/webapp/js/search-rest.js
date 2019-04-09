@@ -96,4 +96,18 @@ app.controller("UserManagementController", function($scope, $http) {
 
 	};
 
+	$scope.editLoad = function(employee) {
+		console.log("load edit executed");
+		$scope.form.emp_id = employee.emp_id;
+		$scope.form.emp_name = employee.emp_name;
+		$scope.form.emp_salary = employee.emp_salary;
+		$scope.form.project_id = employee.project_id;
+		$scope.form.emp_email = employee.emp_email;
+	};
+
+	$scope.deleteLoad = function(employee) {
+		console.log("load delete executed");
+		$scope.form.emp_id = employee.emp_id;
+	};
+
 });
